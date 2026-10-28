@@ -8,7 +8,24 @@ const blendButton = document.getElementById("blendButton");
 const resetButton = document.getElementById("resetButton");
 
 let markerVisible = false;
+const scene = document.querySelector("a-scene");
 
+if (scene) {
+  scene.addEventListener("arReady", () => {
+    statusPill.textContent = "กล้องพร้อมแล้ว";
+    cameraHint.style.display = "flex";
+    cameraHint.querySelector("strong").textContent =
+      "ส่องกล้องไปที่บัตรคำ CAT";
+    result.textContent =
+      "กล้องพร้อมแล้ว ลองส่องบัตรคำ CAT";
+  });
+
+  scene.addEventListener("arError", () => {
+    statusPill.textContent = "เริ่มกล้องไม่สำเร็จ";
+    result.textContent =
+      "เริ่มกล้อง AR ไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อและสิทธิ์กล้อง";
+  });
+}
 if (target) {
   target.addEventListener("targetFound", () => {
     markerVisible = true;
