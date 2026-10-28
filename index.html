@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AR Sound Slider — CAT</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">NB-READ • NOTICE → BLEND → READ</p>
+      <h1>AR Sound Slider</h1>
+      <p class="subtitle">ฝึกผสมเสียงคำว่า <strong>CAT</strong></p>
+    </div>
+    <span class="pill" id="scanStatus">กำลังเตรียมกล้อง…</span>
+  </header>
+
+  <main>
+    <section class="camera-card" aria-label="หน้าต่างกล้อง AR">
+      <div class="camera-hint" id="cameraHint">
+        <span class="scan-icon">▦</span>
+        <strong>ส่องกล้องไปที่บัตรคำ CAT</strong>
+        <span>วางบัตรไว้ในที่สว่าง และถือโทรศัพท์ให้นิ่ง</span>
+      </div>
+      <a-scene
+        mindar-image="imageTargetSrc: ./targets/cat.mind; autoStart: true; uiLoading: no; uiError: no; uiScanning: no;"
+        color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <a-entity mindar-image-target="targetIndex: 0" id="catTarget"></a-entity>
+      </a-scene>
+    </section>
+
+    <section class="activity-card">
+      <div class="step-row">
+        <span class="step-number">1</span>
+        <div><h2>Notice — ฟังเสียงตัวอักษร</h2><p>แตะตัวอักษรทีละตัว แล้วฟังเสียง</p></div>
+      </div>
+      <div class="letter-buttons" aria-label="ปุ่มเสียงตัวอักษร">
+        <button class="letter-btn" data-audio="c.mp3" data-fallback="kuh" aria-label="ฟังเสียง C">C<span>/k/</span></button>
+        <button class="letter-btn" data-audio="a.mp3" data-fallback="æ" aria-label="ฟังเสียง A">A<span>/æ/</span></button>
+        <button class="letter-btn" data-audio="t.mp3" data-fallback="tuh" aria-label="ฟังเสียง T">T<span>/t/</span></button>
+      </div>
+
+      <div class="step-row second">
+        <span class="step-number">2</span>
+        <div><h2>Blend — เลื่อนและผสมเสียง</h2><p>ลากตัวเลื่อนจากซ้ายไปขวา พร้อมพูดเสียงต่อกัน</p></div>
+      </div>
+      <div class="slider-wrap">
+        <div class="phoneme-track"><span>C</span><span>A</span><span>T</span></div>
+        <input id="blendSlider" type="range" min="0" max="2" step="1" value="0" aria-label="แถบเลื่อนผสมเสียง">
+        <div class="slider-caption"><span>เริ่มต้น</span><span>ผสมเสียงครบ</span></div>
+      </div>
+      <button id="blendButton" class="primary-btn">ผสมเสียงเป็นคำ</button>
+      <div id="result" class="result" aria-live="polite">เมื่อพร้อมแล้ว ให้ลองพูดเสียง /k/ /æ/ /t/ ต่อกัน</div>
+      <div id="catReveal" class="cat-reveal hidden">
+        <div class="cat-emoji" aria-hidden="true">🐱</div>
+        <h2>CAT</h2>
+        <p>cat = แมว</p>
+        <p class="teacher-note">ครูให้ผู้เรียนอ่านคำว่า CAT ด้วยตนเองอีกครั้ง</p>
+      </div>
+      <button id="resetButton" class="secondary-btn">เริ่มกิจกรรมใหม่</button>
+    </section>
+
+    <footer>สื่อฝึกอ่านภาษาอังกฤษ • ใช้เพื่อการเรียนรู้และประเมินโดยครู</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
